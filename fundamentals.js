@@ -28,13 +28,30 @@ let four = "4"
 let thirty = "30"
 
 //what is the value of the following expressions?
-let addition = three + four // "34" y
-let multiplication = three * four // 12 y
+let addition = three + four // "34" *there is no wrong answer with this, however, question is confusing, it should have asked if this will return its real mathematical value, like 3+4 = 7. anyway, to get 7 you should convert three and four to Number by...
+
+let addition2 = Number(three) + Number(four);
+console.log(addition2)
+
+//or
+
+let addition3 = parseInt(three) + parseInt(four);
+console.log(addition3);
+
+
+let multiplication = three * four // 12 y //*same with this
+
+let multi = Number(three) * Number(four);
+console.log(multi);
+
+let multi2 = parseInt(three) * parseInt(four);
+console.log(multi2);
+
 let division = three / four // 0.75 y
 let subtraction = three - four // -1 y
 
 let lessThan1 = three < four // true
-let lessThan2 = thirty < four // false n true because a string, forgot string 30 is seen as lower than string 4
+let lessThan2 = thirty < four // false n true because a string, forgot string 30 is seen as lower than string 4 *this is correct, you can also implement what I did above. :-)
 
 // Q3 Which of the following console.log messages will print? Why?
 // The last (1) because 1 is a true value indicating there is data present
