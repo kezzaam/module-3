@@ -446,12 +446,58 @@ console.log(topEarner(salaries)); // Output: "Christina"
 
 //Q10. The following code uses the Date object to print the current time and the number of hours that have passed today so far. 
 // Extend the code to do the following: 
-const today = new Date();
+const today = new Date()
 console.log('Current time is ' + today.toLocaleTimeString())
 console.log(today.getHours() + ' hours have passed so far today')
 
 // a) Print the total number of minutes that have passed so far today
+
+today.getMinutes()
+
 // b) Print the total number of seconds that have passed so far today
+
+today.getSeconds()
+
 // c) Calculate and print your age as: 'I am x years, y months and z days old'
+
+function calculateAge(birthdate) {
+  var birthdateObj = new Date(birthdate);
+  var now = new Date();
+  // get time difference in milliseconds
+  var ageInMilliseconds = now.getTime() - birthdateObj.getTime();
+  // convert the value to years
+  var ageInYears = ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25);
+  // The Math.floor() static method always rounds down and returns the largest integer less than or equal to a given number.
+  // the whole integer number is subtracted from the original to get the decimal part, then multiplied by the respective month and day values to convert
+  var ageInMonths = (ageInYears - Math.floor(ageInYears)) * 12;
+  var ageInDays = (ageInMonths - Math.floor(ageInMonths)) * 30.44;
+  return {
+    years: Math.floor(ageInYears),
+    months: Math.floor(ageInMonths),
+    days: Math.floor(ageInDays)
+  };
+}
+
+const birthDate = new Date("04-10-1983")
+const age = calculateAge(birthDate)
+
+console.log(`I am ${age.years} years, ${age.months} months, and ${age.days} days old.`)
+
+
 // d) Write a function daysInBetween(date1, date2) which calculates and expected 
 // the amount of days in between the two given dates.
+
+function daysInBetween(date1, date2) {
+  // Calculate the difference in milliseconds between the two dates
+  const differenceMilliseconds = date2 - date1;
+  
+  // Convert the difference to days
+  const differenceDays = Math.floor(differenceMilliseconds / (1000 * 60 * 60 * 24));
+
+  return differenceDays;
+}
+
+const date1 = new Date('2022-03-01')
+const date2 = new Date('2022-03-10')
+const days = daysInBetween(date1, date2)
+console.log(`There are ${days} days between ${date1.toDateString()} and ${date2.toDateString()}.`)
