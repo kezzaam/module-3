@@ -167,117 +167,139 @@
 // different time durations. The output of this program should give the output in the order (Use callback pattern to
 // solve this issue)
 
-// setTimeout arguments - function to be executed after the timeout, timeout delay, argument for the function
- 
-  function order(next) {
-    console.log("Order up!")
-    setTimeout(next, 500, base)
-  }
-  
-  function base(next) {
-    console.log("Preparing pizza base")
-    setTimeout(next, 500, cheese)
-  }
-  
-  function cheese(next) {
-    console.log("Adding cheese")
-    setTimeout(next, 500, veggies)
-  }
-  
-  function veggies(next) {   
-    console.log("Sprinkling vegetables")
-    setTimeout(next, 500, cook)
-  }
-  
-  function cook(next) {
-    console.log("Cooking pizza")
-    setTimeout(next, 500, ready)
-  }
-  
-  function ready() {
-    console.log("Pizza is ready to eat")
-  }
+// This is the simplest code to achieve Program 4. It calls the next function inside each function's setTimeout
 
-  // For some reason I struggled to understand this one. So I broke it down carefully.
-  // func: The next function in the sequence to be run.
-  // callback: A function to be called when the entire sequence is finished.
-  function next(func, callback) {
-    // The func argument is a function that takes another function as its argument. 
-    // Each function in the sequence calls the next function in the sequence when it's finished by passing it 
-    // as an argument to the function it received as an argument.
-    func(function(nextFunc) {
-        // The recursive call to next() keeps the sequence going until the final step (ready()) is reached. 
-        // When ready() is called without any arguments, the sequence is finished and callback() is called 
-        // to signify that the entire process is complete.
-        next(nextFunc, callback)
-      }
-    )
-  }
-  
-  next(order)
-  
+// function order() {
+//   console.log("Order received");
+//   base();
+// }
+
+// function base() {
+//   console.log("Preparing pizza base");
+//   setTimeout(cheese, 2000);
+// }
+
+// function cheese() {
+//   console.log("Adding cheese");
+//   setTimeout(veggies, 500);
+// }
+
+// function veggies() {
+//   console.log("Sprinkling vegetables");
+//   setTimeout(cook, 1000);
+// }
+
+// function cook() {
+//   console.log("Cooking pizza");
+//   setTimeout(ready, 5000);
+// }
+
+// function ready() {
+//   console.log("Pizza is ready to eat");
+// }
+
+// order();
+
+// but... to make the code more flexible:
+// each function has a callback - next - which is passed as an argument and called after the set timeout 
+// the next function in the order is passed as an argument to next as the third parameter in setTimeout
+// function order(next) {
+//   console.log("Order received")
+//   setTimeout(next, 500, base)
+// }
+
+// function base(next) {
+//   console.log("Preparing pizza base")
+//   setTimeout(next, 500, cheese)
+// }
+
+// function cheese(next) {
+//   console.log("Adding cheese")
+//   setTimeout(next, 500, veggies)
+// }
+
+// function veggies(next) {
+//   console.log("Sprinkling vegetables")
+//   setTimeout(next, 500, cook)
+// }
+
+// function cook(next) {
+//   console.log("Cooking pizza")
+//   setTimeout(next, 500, ready)
+// }
+
+// function ready() {
+//   console.log("Pizza is ready to eat")
+// }
+
+// // calls order with the next function in the process as an argument
+// order(base)  
+// // but why am I getting console messages twice?
+// // the functions are being called twice, once here in the argument and again inside the order function
+// // I've been stuck on this problem for a ridiculous amount of time, so I'm moving on! It seems like it should be obvious but I'm just not getting it.
+
 
 // // Program 5 : Modify the program 4 to use Promises concept and achieve the required result
 // function order() {
-//     return new Promise(function(resolve, reject) {
-//       setTimeout(function() {
-//         console.log("Order received");
-//         resolve();
-//       }, 1000);
-//     });
-//   }
-  
-//   function base() {
-//     return new Promise(function(resolve, reject) {
-//       setTimeout(function() {
-//         console.log("Preparing pizza base");
-//         resolve();
-//       }, 1000);
-//     });
-//   }
-  
-//   function cheese() {
-//     return new Promise(function(resolve, reject) {
-//       setTimeout(function() {
-//         console.log("Adding cheese");
-//         resolve();
-//       }, 1000);
-//     });
-//   }
-  
-//   function veggies() {
-//     return new Promise(function(resolve, reject) {
-//       setTimeout(function() {
-//         console.log("Sprinkling vegetables");
-//         resolve();
-//       }, 1000);
-//     });
-//   }
-  
-//   function cook() {
-//     return new Promise(function(resolve, reject) {
-//       setTimeout(function() {
-//         console.log("Cooking pizza");
-//         resolve();
-//       }, 1000);
-//     });
-//   }
-  
-//   function ready() {
-//     return new Promise(function(resolve, reject) {
-//       setTimeout(function() {
-//         console.log("Pizza is ready to eat");
-//         resolve();
-//       }, 1000);
-//     });
-//   }
-  
-//   order()
-//     .then(base)
-//     .then(cheese)
-//     .then(veggies)
-//     .then(cook)
-//     .then(ready)
-//     .then(function() {
-//       console.log("Pizza is finished");
-//     });
+//   return new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//       console.log("Order up!")
+//       resolve()
+//     }, 500)
+//   })
+// }
+
+// function base() {
+//   return new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//       console.log("Preparing pizza base")
+//       resolve()
+//     }, 500)
+//   })
+// }
+
+// function cheese() {
+//   return new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//       console.log("Adding cheese")
+//       resolve()
+//     }, 1000)
+//   })
+// }
+
+// function veggies() {
+//   return new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//       console.log("Sprinkling vegetables")
+//       resolve()
+//     }, 500)
+//   })
+// }
+
+// function cook() {
+//   return new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//       console.log("Cooking pizza")
+//       resolve()
+//     }, 1500)
+//   })
+// }
+
+// function ready() {
+//   return new Promise(function (resolve, reject) {
+//     setTimeout(function () {
+//       console.log("Pizza is ready to eat")
+//       resolve()
+//     }, 2500)
+//   })
+// }
+
+// order()
+//   .then(base)
+//   .then(cheese)
+//   .then(veggies)
+//   .then(cook)
+//   .then(ready)
+//   .then(function () {
+//     console.log("Order finished")
+//   })
