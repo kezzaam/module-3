@@ -39,101 +39,211 @@
 // setTimeout(delayMsg, 0, '#3: Delayed by 0ms'); 
 // delayMsg('#4: Not delayed at all')
 
-// A: the order of messages is 4, 3, 2, 1
-// Why? Because the message without setTimeout is prioritised, then the others print in the order of the set milliseconds
+// // A: the order of messages is 4, 3, 2, 1
+// // Why? Because the message without setTimeout is prioritised, then the others print in the order of the set milliseconds
 
 // // b) Rewrite delayMsg as an arrow function
 // const delayMsg = (msg) => {
 //     console.log(`This message will be printed after a delay: ${msg}`);
 // }
-// // // c) Add a fifth test which uses a large delay time (greater than 10 seconds)  
+// // c) Add a fifth test which uses a large delay time (greater than 10 seconds)  
 // setTimeout(delayMsg, 100, '#1: Delayed by 100ms');
 // setTimeout(delayMsg, 20, '#2: Delayed by 20ms'); 
 // setTimeout(delayMsg, 0, '#3: Delayed by 0ms'); 
 // delayMsg('#4: Not delayed at all')
 // setTimeout(delayMsg, 10001, '#5: Delayed by 10001ms');
-// // // d) Use clearTimeout to prevent the fifth test from printing at all. 
+// // d) Use clearTimeout to prevent the fifth test from printing at all. 
 // const timeoutId = setTimeout(delayMsg, 10001, '#5: Delayed by 10001ms');
-// clearTimeout(timeoutId);
-// // the cancellation has no effect on the above message #5 because it is qeued already by the time clearTimeout is called
+// // calling clearTimeout on its own won't work as #5 has already been queued. In order to prevent the message from being logged, we need to call clearTimeout before the timeout has expired
+// setTimeout(() => clearTimeout(timeoutId), 9000);
+
 
 
 // // Q3. 'Debouncing' is a concept that refers to 'putting off' the execution of multiple, fast-timed, 
 // // similar requests until there's a brief pause, then only executing the most recent of those requests. 
 // // See https://www.techtarget.com/whatis/definition/debouncing
-// // It's often used to handle fast-firing scrolling events in a browser, or to prevent multiple server 
-// // requests being initiated if a user clicks repeatedly on a button.
-// //Using the following code to test and start with:
-// // a) Create a debounce(func) decorator, which is a wrapper that takes a function func and suspends calls to func until there's 1000 milliseconds of inactivity. After this 1 second pause, the most recent call to func should be executed and any others ignored.
-// BREAKDOWN: the decorator takes a function (func) as its argument - so we want to apply debouncing to it using another function
-function debounce(func) {
-    let timeoutId
-    // returns a new function which when called clears any existing timeout using clearTimeout (resetting)
-    return function() {
-      // capturing the current execution context and saving it to a variable called context - By capturing this before we create the timeout, we ensure that we have the correct this value when we eventually call func.
-      const context = this
-      //capturing all of the arguments passed to the debounced function and saving them to a variable called args - to make sure we pass the correct arguments to func when we call it.
-      const args = arguments
+// // It's often used to handle fast-firing scrolling events in a browser, or to prevent multiple server requests being initiated if a user clicks repeatedly on a button.
+// // Using the following code to test and start with:
+// // a) Create a debounce(func) decorator, which is a wrapper that takes a function func and suspends calls to func until there's 1000 milliseconds of inactivity. 
+// // After this 1 second pause, the most recent call to func should be executed and any others ignored.
+// // BREAKDOWN: the decorator takes a function (func) as its argument - so we want to apply debouncing to it using another function
+// function debounce(func) {
+//     // assigning variable ot store timeout
+//     let timeoutId
+//     // function which when called clears any existing timeout using clearTimeout (resetting)
+//     return function() {
+//       // capturing the current execution context and saving it to a variable called context - By capturing this before we create the timeout, we ensure that we have the correct this value when we eventually call func.
+//       const context = this
+//       //capturing all of the arguments passed to the debounced function and saving them to a variable called args - to make sure we pass the correct arguments to func when we call it.
+//       const args = arguments
       
-      clearTimeout(timeoutId)
-      // this part is wrapping the func in debouncing behaviour - creating a new timeout which delays func by 1000ms
-      timeoutId = setTimeout(function() {
-        // here we call the func
-        func.apply(context, args)
-      }, 1000)
-    }
-  }
+//       clearTimeout(timeoutId)
+//       // this part is wrapping the func in debouncing behaviour - creating a new timeout which delays execution of func by 1000ms
+//       timeoutId = setTimeout(function() {
+//         // here we call the func
+//         func.apply(context, args)
+//       }, 1000)
+//     }
+//   }
   
-  function doSomething() {
-    console.log("Doing something...");
-  }
+  // function doSomething() {
+  //   console.log("Doing something...");
+  // }
   
-  // testing that it works
-  const debouncedDoSomething = debounce(doSomething);
-  
-  debouncedDoSomething(); // Will execute after 1000ms
-  debouncedDoSomething(); // Will be ignored
-  debouncedDoSomething(); // Will be ignored
+//   // testing that it works
+//   const debouncedDoSomething = debounce(doSomething);
+
+//   doSomething() 
+//   debouncedDoSomething(); // Will execute after 1000ms
+//   debouncedDoSomething(); // Will be ignored
+//   debouncedDoSomething(); // Will be ignored
 
 // // b) Extend the debounce decorator function to take a second argument ms, which defines the length of the period of inactivity instead of hardcoding to 1000ms
-// // c) Extend debounce to allow the original debounced function printMe to take an argument msg which is included in the console.log statement. 
-// function printMe() { 
-//     console.log('printing debounced message') 
-// } 
+// function debounce2(func, ms) {
+//   // assigning variable ot store timeout
+//   let timeoutId
+//   // function which when called clears any existing timeout using clearTimeout (resetting)
+//   return function() {
+//     // capturing the current execution context and saving it to a variable called context - By capturing this before we create the timeout, we ensure that we have the correct this value when we eventually call func.
+//     const context = this
+//     //capturing all of the arguments passed to the debounced function and saving them to a variable called args - to make sure we pass the correct arguments to func when we call it.
+//     const args = arguments
+    
+//     clearTimeout(timeoutId)
+//     // this part is wrapping the func in debouncing behaviour - creating a new timeout which delays execution of func by 1000ms
+//     timeoutId = setTimeout(function() {
+//       // here we call the func
+//       func.apply(context, args)
+//     }, ms)
+//   }
+// }
 
-// printMe = debounce(printMe); //create this debounce function for a) //fire off 3 calls to printMe within 300ms - only the LAST one should print, after 1000ms of no calls 
-// setTimeout( printMe, 100); 
-// setTimeout( printMe, 200); 
-// setTimeout( printMe, 300);
+// const debouncedDoSomething2 = debounce2(doSomething, 5000);
+// doSomething() 
+// debouncedDoSomething2(); // Will execute after 5000ms
+// debouncedDoSomething2(); // Will be ignored
+
+// // c) Extend debounce to allow the original debounced function printMe to take an argument msg which is included in the console.log statement. 
+
+// function debounce(func) {
+//     // assigning variable ot store timeout
+//     let timeoutId
+//     // function which when called clears any existing timeout using clearTimeout (resetting)
+//     return function() {
+//       // capturing the current execution context and saving it to a variable called context - By capturing this before we create the timeout, we ensure that we have the correct this value when we eventually call func.
+//       const context = this
+//       //capturing all of the arguments passed to the debounced function and saving them to a variable called args - to make sure we pass the correct arguments to func when we call it.
+//       const args = arguments
+      
+//       clearTimeout(timeoutId)
+//       // this part is wrapping the func in debouncing behaviour - creating a new timeout which delays execution of func by 1000ms
+//       timeoutId = setTimeout(function() {
+//         // here we call the func
+//         func.apply(context, args)
+//       }, 1000)
+//     }
+//   }
+
+//   function printMe(msg) { 
+//     console.log(msg) 
+// } 
+// // create a new function printMeDebounced that has the debouncing behavior applied to it.
+// const printMeDebounced = debounce(printMe) //create this debounce function for a) //fire off 3 calls to printMe within 300ms - only the LAST one should print, after 1000ms of no calls 
+// // pass anonymous function as argument to setTimeout, instead of just the value
+// setTimeout(() => printMeDebounced('printing debounced message'), 100); 
+// setTimeout(() => printMeDebounced('printing debounced message'), 200); 
+// setTimeout(() => printMeDebounced('printing debounced message'), 300);
 
 
 // // Q4. The Fibonacci sequence of numbers is a famous pattern where the next number in the 
 // // sequence is the sum of the previous 2.
 // // e.g. 1, 1, 2, 3, 5, 8, 13, 21, 34, etc.
 // // a) Write a function printFibonacci() using setInterval that outputs a number in the Fibonacci sequence every second.
+
+
+// function printFibonacci() {
+//   // initialise numbers to start point
+//   let prev = 0
+//   let curr = 1
+//   // setInterval
+//   const intervalId = setInterval(() => {
+//     // store current value in a temporary variable to be able to output it before it's updated
+//     const temp = curr
+//     // add previous number to current - sum of 2 numbers ie 0 + 1 = 1, 1 + 1 = 2 etc - update curr value
+//     curr += prev
+//     // updating prev value to temp
+//     prev = temp
+//     console.log(curr)
+//   }, 1000)
+// }
+
+// printFibonacci()
+
 // // b) Write a new version printFibonacciTimeouts() that uses nested setTimeout calls to do the same thing 
+// function printFibonacciTimeouts() {
+//   let prev = 0
+//   let curr = 1
+
+//   function printNext() {
+//     const temp = curr
+//     curr += prev
+//     prev = temp
+//     console.log(curr)
+//     // recursively calls itself in an infinite loop
+//     setTimeout(printNext, 1000)
+//   }
+//   // starts the sequence
+//   setTimeout(printNext, 1000)
+// }
+
+// printFibonacciTimeouts()
+
 // // c) Extend one of the above functions to accept a limit argument, which tells it how many numbers to print before stopping.
+// function printFibonacci(limit) {
+//   // initialise numbers and count
+//   let prev = 0
+//   let curr = 1
+//   // counter for limit
+//   let count = 0
+//   // setInterval
+//   const intervalId = setInterval(() => {
+//     // store current value in a temporary variable to be able to output it before it's updated
+//     const temp = curr
+//     // add previous number to current - sum of 2 numbers ie 0 + 1 = 1, 1 + 1 = 2 etc - update curr value
+//     curr += prev
+//     // updating prev value to temp
+//     prev = temp
+//     console.log(curr)
+//     // keep track of numbers and stop printing at limit
+//     count++
+//     if (count >= limit) {
+//       clearInterval(intervalId)
+//     }
+//   }, 1000)
+// }
+    
 
+// printFibonacci(10)
 
-// // Q5. The following car object has several properties and a method which uses them to print 
-// // a description. When calling the function normally this works as expected, but using it from 
-// // within setTimeout fails. Why?
-// let car = { 
-//     make: "Porsche", 
-//     model: '911', 
-//     year: 1964, 
-//     description() {
-//       console.log(`This car is a ${this.make} ${this.model} from ${this.year}`); 
-//     } 
-// }; 
+// Q5. The following car object has several properties and a method which uses them to print 
+// a description. When calling the function normally this works as expected, but using it from 
+// within setTimeout fails. Why?
+let car = { 
+    make: "Porsche", 
+    model: '911', 
+    year: 1964, 
+    description() {
+      console.log(`This car is a ${this.make} ${this.model} from ${this.year}`); 
+    } 
+}; 
 
-// car.description(); //works setTimeout(car.description, 200); //fails
+car.description(); //works setTimeout(car.description, 200); //fails
 
-// // a) Fix the setTimeout call by wrapping the call to car.description() inside a function
-// // b) Change the year for the car by creating a clone of the original and overriding it
-// // c) Does the delayed description() call use the original values or the new values from b)? Why?
-// // d) Use bind to fix the description method so that it can be called from within setTimeout without a wrapper function
-// // e) Change another property of the car by creating a clone and overriding it, and test that setTimeout still uses the bound value from d)
+// a) Fix the setTimeout call by wrapping the call to car.description() inside a function
+// b) Change the year for the car by creating a clone of the original and overriding it
+// c) Does the delayed description() call use the original values or the new values from b)? Why?
+// d) Use bind to fix the description method so that it can be called from within setTimeout without a wrapper function
+// e) Change another property of the car by creating a clone and overriding it, and test that setTimeout still uses the bound value from d)
 
 
 // // Q6. Use the Function prototype to add a new delay(ms) function to all functions, which can
