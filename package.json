@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "node-fetch": "^3.3.0"
+  },
+  "name": "module-3",
+  "type": "module", 
+  "description": "Module 3 JavaScript lab exercises",
+  "version": "1.0.0",
+  "main": "advanced.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kezzaam/module03.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kezzaam/module03/issues"
+  },
+  "homepage": "https://github.com/kezzaam/module03#readme"
+}

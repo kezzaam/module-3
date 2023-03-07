@@ -76,7 +76,7 @@
 //       const context = this
 //       //capturing all of the arguments passed to the debounced function and saving them to a variable called args - to make sure we pass the correct arguments to func when we call it.
 //       const args = arguments
-      
+
 //       clearTimeout(timeoutId)
 //       // this part is wrapping the func in debouncing behaviour - creating a new timeout which delays execution of func by 1000ms
 //       timeoutId = setTimeout(function() {
@@ -85,11 +85,11 @@
 //       }, 1000)
 //     }
 //   }
-  
-  // function doSomething() {
-  //   console.log("Doing something...");
-  // }
-  
+
+// function doSomething() {
+//   console.log("Doing something...");
+// }
+
 //   // testing that it works
 //   const debouncedDoSomething = debounce(doSomething);
 
@@ -108,7 +108,7 @@
 //     const context = this
 //     //capturing all of the arguments passed to the debounced function and saving them to a variable called args - to make sure we pass the correct arguments to func when we call it.
 //     const args = arguments
-    
+
 //     clearTimeout(timeoutId)
 //     // this part is wrapping the func in debouncing behaviour - creating a new timeout which delays execution of func by 1000ms
 //     timeoutId = setTimeout(function() {
@@ -134,7 +134,7 @@
 //       const context = this
 //       //capturing all of the arguments passed to the debounced function and saving them to a variable called args - to make sure we pass the correct arguments to func when we call it.
 //       const args = arguments
-      
+
 //       clearTimeout(timeoutId)
 //       // this part is wrapping the func in debouncing behaviour - creating a new timeout which delays execution of func by 1000ms
 //       timeoutId = setTimeout(function() {
@@ -221,36 +221,70 @@
 //     }
 //   }, 1000)
 // }
-    
+
 
 // printFibonacci(10)
 
-// Q5. The following car object has several properties and a method which uses them to print 
-// a description. When calling the function normally this works as expected, but using it from 
-// within setTimeout fails. Why?
-let car = { 
-    make: "Porsche", 
-    model: '911', 
-    year: 1964, 
-    description() {
-      console.log(`This car is a ${this.make} ${this.model} from ${this.year}`); 
-    } 
-}; 
+// // Q5. The following car object has several properties and a method which uses them to print 
+// // a description. When calling the function normally this works as expected, but using it from 
+// // within setTimeout fails. Why?
 
-car.description(); //works setTimeout(car.description, 200); //fails
+// // A: because the description method loses its this context when passed as an argument to setTimeout
+// let car = { 
+//     make: "Porsche", 
+//     model: '911', 
+//     year: 1964, 
+//     description() {
+//       console.log(`This car is a ${this.make} ${this.model} from ${this.year}`); 
+//     } 
+// }; 
 
-// a) Fix the setTimeout call by wrapping the call to car.description() inside a function
-// b) Change the year for the car by creating a clone of the original and overriding it
-// c) Does the delayed description() call use the original values or the new values from b)? Why?
-// d) Use bind to fix the description method so that it can be called from within setTimeout without a wrapper function
-// e) Change another property of the car by creating a clone and overriding it, and test that setTimeout still uses the bound value from d)
+// car.description(); //works 
+// setTimeout(car.description, 200); //fails
 
+// // a) Fix the setTimeout call by wrapping the call to car.description() inside a function
+// setTimeout(function() {
+//   car.description();
+// }, 200);
+// // b) Change the year for the car by creating a clone of the original and overriding it
+// let carClone = car
+// carClone.year = 1972
+// console.log(carClone)
+
+// // c) Does the delayed description() call use the original values or the new values from b)? Why?
+// // A: No, because it's a shallow copy referencing the same data and changes the original values
+// setTimeout(function() {
+//   carClone.description();
+// }, 200);
+
+// // d) Use bind to fix the description method so that it can be called from within setTimeout without a wrapper function
+// setTimeout(car.description.bind(car), 200);
+
+// // e) Change another property of the car by creating a clone and overriding it, and test that setTimeout still uses the bound value from d)
+// carClone.make = "Ford GTX"
+// setTimeout(car.description.bind(car), 200);
 
 // // Q6. Use the Function prototype to add a new delay(ms) function to all functions, which can
-// // be used to delay the call to that function by ms milliseconds. function multiply(a, b) { console.log( a * b ); } multiply.delay(500)(5, 5); // prints 25 after 500 milliseconds
+// // be used to delay the call to that function by ms milliseconds. 
 // // a) Use the example multiply function below to test it with, as above, and assume that all delayed functions will take two parameters
 // // b) Use apply to improve your solution so that delayed functions can take any number of parameters
 // // c) Modify multiply to take 4 parameters and multiply all of them, and test that your delay prototype function still works.
+// Function.prototype.delay = function(ms) {
+//   // Call this function with the specified parameters in the specified amount of milliseconds.
+//   var fnThis = this
+//   return function() {
+//     var args = arguments
+//     setTimeout(function() {
+//       fnThis.apply(null, args)
+//     }, ms)
+//   }
+// }
+
+// function multiply(a, b, c, d) { 
+//   console.log( a * b * c * d ); 
+// } 
+
+// multiply.delay(500)(5, 5, 5, 5); // prints 25 after 500 milliseconds
 
 
 // // Q7. In JavaScript, the toString method is used to convert an object to a string representation.
@@ -267,15 +301,38 @@ car.description(); //works setTimeout(car.description, 200); //fails
 //     this.gender = gender; 
 // } 
 
+// Person.prototype.toString = function() {
+//   return `Name: ${this.name}, Age: ${this.age}, Gender: ${this.gender}`
+// }
+
 // const person1 = new Person('James Brown', 73, 'male') 
+// const person2 = new Person('Dave Lister', 26, 'male') 
+// const person3 = new Person('Arnold J. Rimmer', 29, 'male') 
 // console.log('person1: '+person1) //prints person1: [object Object]
+// console.log('person2: '+person2) 
+// console.log('person3: '+person3) 
+
+// function Student(name, age, gender, cohort) { 
+//   // uses call to inherit properties from Person
+//   Person.call(this, name, age, gender)
+//   this.cohort = cohort
+// }
+
+// Student.prototype.toString = function() {
+//   return `Name: ${this.name}, Age: ${this.age}, Gender: ${this.gender}, Cohort: ${this.cohort}`
+// }
+
+// const student1 = new Student('Cat', 25, 'male', 'Red Dwarf') 
+// const student2 = new Student('Kryten', 'unknown', 'male', 'Red Dwarf') 
+// console.log('student1: '+student1)
+// console.log('student2: '+student2) 
 
 // // Q8. The following DigitalClock class uses an interval to print the time every second once started, until stopped. 
 // class DigitalClock { 
 //     constructor(prefix) { 
 //         this.prefix = prefix; 
 //     } 
-    
+
 //     display() { 
 //         let date = new Date(); 
 //         //create 3 variables in one go using array destructuring 
@@ -283,13 +340,13 @@ car.description(); //works setTimeout(car.description, 200); //fails
 //         if (hours < 10) hours = '0' + hours; 
 //         if (mins < 10) mins = '0' + mins; 
 //         if (secs < 10) secs = '0' + secs; 
-        
+
 //         console.log(`${this.prefix} ${hours}:${mins}:${secs}`); 
 //     } 
 //     stop() { 
 //         clearInterval(this.timer); 
 //     } 
-    
+
 //     start() { 
 //         this.display(); 
 //         this.timer = setInterval(() => this.display(), 1000); 
@@ -299,28 +356,90 @@ car.description(); //works setTimeout(car.description, 200); //fails
 // const myClock = new DigitalClock('my clock:') 
 // myClock.start()
 
-// // a) Create a new class PrecisionClock that inherits from DigitalClock and adds the parameter precision – the number of ms between 'ticks'. This precision parameter should default to 1 second if not supplied.
-// // b) Create a new class AlarmClock that inherits from DigitalClock and adds the parameter wakeupTime in the format hh:mm. When the clock reaches this time, it should print a 'Wake Up' message and stop ticking. This wakeupTime parameter should default to 07:00 if not supplied.
 
+// // a) Create a new class PrecisionClock that inherits from DigitalClock and adds the parameter precision 
+// // – the number of ms between 'ticks'. This precision parameter should default to 1 second if not supplied. 
+// class PrecisionClock extends DigitalClock {
+//   constructor(prefix, precision = 1000) { 
+//     // from the parent DigitalClock
+//     super(prefix)
+//     // new precision argument with nullish coalescing operator to default to 1000
+//     this.precision = precision ?? 1000
+// } 
+
+// start() { 
+//   this.display(); 
+//   // add new precision 
+//   this.timer = setInterval(() => this.display(), this.precision); 
+// } 
+// }
+
+// // const myClock2 = new PrecisionClock('my precision clock:') 
+// // myClock2.start()
+
+// // b) Create a new class AlarmClock that inherits from DigitalClock and adds the parameter wakeupTime in the format hh:mm. 
+// // When the clock reaches this time, it should print a 'Wake Up' message and stop ticking. 
+// // This wakeupTime parameter should default to 07:00 if not supplied.
+
+//   class AlarmClock extends DigitalClock {
+//   constructor(prefix, wakeupTime) { 
+//     // from the parent DigitalClock
+//     super(prefix)
+//     // new precision argument with nullish coalescing operator to default to 1000
+//     this.wakeupTime = wakeupTime ?? '07:00'
+//   } 
+
+//   display() {
+//     // get the time from the parent
+//     super.display()
+//     // create date object for the current time and the wakeup time
+//     const currentTime = new Date();
+//     const wakeupTime = new Date();
+//     // format the time into hh:mm
+//     wakeupTime.setHours(parseInt(this.wakeupTime.split(':')[0]))
+//     wakeupTime.setMinutes(parseInt(this.wakeupTime.split(':')[1]))
+//     wakeupTime.setSeconds(0)
+//     // print Wake up message if time is greater than or equal to current
+//     if (currentTime >= wakeupTime) {
+//       console.log('Wake Up!')
+//       // stop clock
+//       this.stop()
+//     }
+//   }
+// }
+
+// const myClock3 = new AlarmClock('my alarm clock:', '20:39') 
+// myClock3.start()
 
 // // Q9. We can delay execution of a function using setTimeout, where we need to provide the callback function to be executed after the delay.
 // // a) Create a promise-based alternative randomDelay() that delays execution for a random amount of time (between 1 and 20 seconds) and returns a promise we can use via .then(), as in the starter code below
 // // b) If the random delay is even, consider this a successful delay and resolve the promise, and if the random number is odd, consider this a failure and reject it
 // // c) Update the testing code to catch rejected promises and print a different message
 // // d) Try to update the then and catch messages to include the random delay value
-// function randomDelay() { // your code 
-// } 
-// randomDelay().then(() => console.log('There appears to have been a delay.'));
+// function randomDelay() { 
+//   return new Promise(function(resolve, reject) {
+//     let seconds = Math.floor(Math.random() * 20) + 1; // random value between 1 and 20
+//     setTimeout(function() {
+//       if (seconds % 2 == 0) {
+//         resolve()
+//       } else {
+//         reject(new Error("Whoops!"))      
+//       }
+//     }, seconds * 1000) // convert seconds to milliseconds
+//     console.log(seconds) 
+//   })
+// }
 
-// // Q10. Fetch is a browser-based function to send a request and receive a response from a server, 
-// // which uses promises to handle the asynchronous response. 
-// // The below fetchURLData uses fetch to check the response for a successful status code, and returns a promise containing the JSON sent by the remote server if successful or an error if it failed. (To run this code in a node.js environment, follow the instructions in the comments before the function.)
-// // a) Write a new version of this function using async/await
-// // b) Test both functions with valid and invalid URLs. 
 
-// //run 'npm init' and accept all the defaults 
-// //run 'npm install node-fetch' 
-// //add this line to package.json after line 5: "type": "module", 
+// randomDelay()
+//   .then(() => console.log('There appears to have been a delay.'))
+//   .catch((error) => console.log(error.message))
+
+
+// // Q10. Fetch is a browser-based function to send a request and receive a response from a server, which uses promises to handle the asynchronous response. 
+// // The below fetchURLData uses fetch to check the response for a successful status code, and returns a promise 
+// // containing the JSON sent by the remote server if successful or an error if it failed. 
+// // (To run this code in a node.js environment, follow the instructions in the comments before the function.)
 // import fetch from 'node-fetch' 
 // globalThis.fetch = fetch 
 
@@ -332,10 +451,48 @@ car.description(); //works setTimeout(car.description, 200); //fails
 //             throw new Error(`Request failed with status ${response.status}`); 
 //         } 
 //     }); 
-    
+
 //     return fetchPromise; 
 // }
 
 // fetchURLData('https://jsonplaceholder.typicode.com/todos/1') 
 // .then(data => console.log(data)) 
 // .catch(error => console.error(error.message));
+
+// // Output { userId: 1, id: 1, title: 'delectus aut autem', completed: false }
+
+// a) Write a new version of this function using async/await
+import fetch from 'node-fetch'
+globalThis.fetch = fetch
+// rewrite function as async
+async function fetchURLData(url) {
+  try {
+    // assign the fetch url as the first step of the response with await
+    const response = await fetch(url)
+    // same if condition - indicates that the request has succeeded
+    if (response.status === 200) {
+      // assign the json data as the next step to await
+      const data = await response.json()
+      // return the json data
+      return data
+    } else {
+      throw new Error(`Request failed with status ${response.status}`)
+    }
+    // catch statement must follow the try  
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+// b) Test both functions with valid and invalid URLs. 
+// valid url test
+fetchURLData('https://jsonplaceholder.typicode.com/todos/1')
+  .then(data => console.log(data))
+  .catch(error => console.error(error.message))
+// Output { userId: 1, id: 1, title: 'delectus aut autem', completed: false }
+
+// invalid url test
+fetchURLData('https://jsonplaceholder.typicode.com/todos/invalid-url')
+  .then(data => console.log(data))
+  .catch(error => console.error(error.message))
+// Output: Request failed with status 404

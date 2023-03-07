@@ -200,12 +200,13 @@
 
 // order();
 
-// but... to make the code more flexible:
-// each function has a callback - next - which is passed as an argument and called after the set timeout 
-// the next function in the order is passed as an argument to next as the third parameter in setTimeout
+// // but... to make the code more flexible:
+// // each function has a callback - next - which is passed as an argument and called after the set timeout 
+// // the next function in the order is passed as an argument to next as the third parameter in setTimeout
+
 // function order(next) {
 //   console.log("Order received")
-//   setTimeout(next, 500, base)
+//   setTimeout(next, 500, veggies)
 // }
 
 // function base(next) {
@@ -236,7 +237,7 @@
 // order(base)  
 // // but why am I getting console messages twice?
 // // the functions are being called twice, once here in the argument and again inside the order function
-// // I've been stuck on this problem for a ridiculous amount of time, so I'm moving on! It seems like it should be obvious but I'm just not getting it.
+// // fixed by changing the step in the order function to cheese instead of base
 
 
 // // Program 5 : Modify the program 4 to use Promises concept and achieve the required result
@@ -303,3 +304,70 @@
 //   .then(function () {
 //     console.log("Order finished")
 //   })
+
+  // Program 6 : Modify the program 5 to use async and await concept to achieve the required result
+  function order() {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        console.log("Order up!")
+        resolve()
+      }, 500)
+    })
+  }
+  
+  function base() {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        console.log("Preparing pizza base")
+        resolve()
+      }, 500)
+    })
+  }
+  
+  function cheese() {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        console.log("Adding cheese")
+        resolve()
+      }, 1000)
+    })
+  }
+  
+  function veggies() {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        console.log("Sprinkling vegetables")
+        resolve()
+      }, 500)
+    })
+  }
+  
+  function cook() {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        console.log("Cooking pizza")
+        resolve()
+      }, 1500)
+    })
+  }
+  
+  function ready() {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        console.log("Pizza is ready to eat")
+        resolve()
+      }, 2000)
+    })
+  }
+
+  async function makePizza() {
+    await order()
+    await base()
+    await cheese()
+    await veggies()
+    await cook()
+    await ready()
+    console.log("Order finished")
+  }
+
+  makePizza()
