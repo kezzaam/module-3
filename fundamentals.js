@@ -106,6 +106,7 @@ console.log(getGreeting('Linda'));
 // a) Complete the inigo object by adding a lastName property and including it in the greeting.
 // b) Complete getCatchPhrase so that if the person argument has 6 fingers, it instead prints his famous catch phrase to the console.
 // c) Update getCatchPhrase to use arrow function syntax and a conditional operator.
+
 const westley = {
     name: 'Westley',
     numFingers: 5
@@ -135,6 +136,7 @@ const inigo = {
 
 inigo.greeting(westley)
 inigo.greeting(rugen)
+
 // Is it a bonus that I love the Princess Bride? /* oh, of course! but Princess bride? really?
 
 // Q7. The following object represents a basketball game and keeps track of the score as the game progresses.

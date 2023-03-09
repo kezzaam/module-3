@@ -1,19 +1,19 @@
 // // // Q1. makeCounter below is a decorator function which creates and returns a function that increments a counter.
 // // // a) Create a second counter counter2 using the makeCounter function and test to see if it remains independent to counter1
 // // // b) Modify makeCounter so that it takes an argument startFrom specifying where the counter starts from (instead of always starting from 0)
-// // // c) Modify makeCounter to take another argument incrementBy, which specifies how much each call to counter() should increase the counter value by. 
-// function makeCounter(startFrom, incrementBy) { 
+// // // c) Modify makeCounter to take another argument incrementBy, which specifies how much each call to counter() should increase the counter value by.
+// function makeCounter(startFrom, incrementBy) {
 //     // start from argument number or 0
-//     let currentCount = startFrom || 0; 
-//     return function() { 
-//         currentCount += incrementBy; 
-//         console.log(currentCount) 
-//         return currentCount; 
-//     }; 
-// } 
+//     let currentCount = startFrom || 0;
+//     return function() {
+//         currentCount += incrementBy;
+//         console.log(currentCount)
+//         return currentCount;
+//     };
+// }
 
-// // let counter1 = makeCounter(); 
-// // let counter2 = makeCounter(); 
+// // let counter1 = makeCounter();
+// // let counter2 = makeCounter();
 // // console.log(counter1()); // 1
 // // console.log(counter1()); // 2
 // // console.log(counter2()); // 1
@@ -30,13 +30,13 @@
 // // Q2. The following delayMsg function is intended to be used to delay printing a message until some time has passed.
 // // a) What order will the four tests below print in? Why?
 
-// function delayMsg(msg) { 
-//     console.log(`This message will be printed after a delay: ${msg}`) 
-// } 
+// function delayMsg(msg) {
+//     console.log(`This message will be printed after a delay: ${msg}`)
+// }
 
-// setTimeout(delayMsg, 100, '#1: Delayed by 100ms'); 
-// setTimeout(delayMsg, 20, '#2: Delayed by 20ms'); 
-// setTimeout(delayMsg, 0, '#3: Delayed by 0ms'); 
+// setTimeout(delayMsg, 100, '#1: Delayed by 100ms');
+// setTimeout(delayMsg, 20, '#2: Delayed by 20ms');
+// setTimeout(delayMsg, 0, '#3: Delayed by 0ms');
 // delayMsg('#4: Not delayed at all')
 
 // // A: the order of messages is 4, 3, 2, 1
@@ -46,25 +46,25 @@
 // const delayMsg = (msg) => {
 //     console.log(`This message will be printed after a delay: ${msg}`);
 // }
-// // c) Add a fifth test which uses a large delay time (greater than 10 seconds)  
+// // c) Add a fifth test which uses a large delay time (greater than 10 seconds)
 // setTimeout(delayMsg, 100, '#1: Delayed by 100ms');
-// setTimeout(delayMsg, 20, '#2: Delayed by 20ms'); 
-// setTimeout(delayMsg, 0, '#3: Delayed by 0ms'); 
+// setTimeout(delayMsg, 20, '#2: Delayed by 20ms');
+// setTimeout(delayMsg, 0, '#3: Delayed by 0ms');
 // delayMsg('#4: Not delayed at all')
 // setTimeout(delayMsg, 10001, '#5: Delayed by 10001ms');
-// // d) Use clearTimeout to prevent the fifth test from printing at all. 
+// // d) Use clearTimeout to prevent the fifth test from printing at all.
 // const timeoutId = setTimeout(delayMsg, 10001, '#5: Delayed by 10001ms');
 // // calling clearTimeout on its own won't work as #5 has already been queued. In order to prevent the message from being logged, we need to call clearTimeout before the timeout has expired
 // setTimeout(() => clearTimeout(timeoutId), 9000);
 
 
 
-// // Q3. 'Debouncing' is a concept that refers to 'putting off' the execution of multiple, fast-timed, 
-// // similar requests until there's a brief pause, then only executing the most recent of those requests. 
+// // Q3. 'Debouncing' is a concept that refers to 'putting off' the execution of multiple, fast-timed,
+// // similar requests until there's a brief pause, then only executing the most recent of those requests.
 // // See https://www.techtarget.com/whatis/definition/debouncing
 // // It's often used to handle fast-firing scrolling events in a browser, or to prevent multiple server requests being initiated if a user clicks repeatedly on a button.
 // // Using the following code to test and start with:
-// // a) Create a debounce(func) decorator, which is a wrapper that takes a function func and suspends calls to func until there's 1000 milliseconds of inactivity. 
+// // a) Create a debounce(func) decorator, which is a wrapper that takes a function func and suspends calls to func until there's 1000 milliseconds of inactivity.
 // // After this 1 second pause, the most recent call to func should be executed and any others ignored.
 // // BREAKDOWN: the decorator takes a function (func) as its argument - so we want to apply debouncing to it using another function
 // function debounce(func) {
@@ -93,7 +93,7 @@
 //   // testing that it works
 //   const debouncedDoSomething = debounce(doSomething);
 
-//   doSomething() 
+//   doSomething()
 //   debouncedDoSomething(); // Will execute after 1000ms
 //   debouncedDoSomething(); // Will be ignored
 //   debouncedDoSomething(); // Will be ignored
@@ -119,11 +119,11 @@
 // }
 
 // const debouncedDoSomething2 = debounce2(doSomething, 5000);
-// doSomething() 
+// doSomething()
 // debouncedDoSomething2(); // Will execute after 5000ms
 // debouncedDoSomething2(); // Will be ignored
 
-// // c) Extend debounce to allow the original debounced function printMe to take an argument msg which is included in the console.log statement. 
+// // c) Extend debounce to allow the original debounced function printMe to take an argument msg which is included in the console.log statement.
 
 // function debounce(func) {
 //     // assigning variable ot store timeout
@@ -144,18 +144,18 @@
 //     }
 //   }
 
-//   function printMe(msg) { 
-//     console.log(msg) 
-// } 
+//   function printMe(msg) {
+//     console.log(msg)
+// }
 // // create a new function printMeDebounced that has the debouncing behavior applied to it.
-// const printMeDebounced = debounce(printMe) //create this debounce function for a) //fire off 3 calls to printMe within 300ms - only the LAST one should print, after 1000ms of no calls 
+// const printMeDebounced = debounce(printMe) //create this debounce function for a) //fire off 3 calls to printMe within 300ms - only the LAST one should print, after 1000ms of no calls
 // // pass anonymous function as argument to setTimeout, instead of just the value
-// setTimeout(() => printMeDebounced('printing debounced message'), 100); 
-// setTimeout(() => printMeDebounced('printing debounced message'), 200); 
+// setTimeout(() => printMeDebounced('printing debounced message'), 100);
+// setTimeout(() => printMeDebounced('printing debounced message'), 200);
 // setTimeout(() => printMeDebounced('printing debounced message'), 300);
 
 
-// // Q4. The Fibonacci sequence of numbers is a famous pattern where the next number in the 
+// // Q4. The Fibonacci sequence of numbers is a famous pattern where the next number in the
 // // sequence is the sum of the previous 2.
 // // e.g. 1, 1, 2, 3, 5, 8, 13, 21, 34, etc.
 // // a) Write a function printFibonacci() using setInterval that outputs a number in the Fibonacci sequence every second.
@@ -179,7 +179,7 @@
 
 // printFibonacci()
 
-// // b) Write a new version printFibonacciTimeouts() that uses nested setTimeout calls to do the same thing 
+// // b) Write a new version printFibonacciTimeouts() that uses nested setTimeout calls to do the same thing
 // function printFibonacciTimeouts() {
 //   let prev = 0
 //   let curr = 1
@@ -225,21 +225,21 @@
 
 // printFibonacci(10)
 
-// // Q5. The following car object has several properties and a method which uses them to print 
-// // a description. When calling the function normally this works as expected, but using it from 
+// // Q5. The following car object has several properties and a method which uses them to print
+// // a description. When calling the function normally this works as expected, but using it from
 // // within setTimeout fails. Why?
 
 // // A: because the description method loses its this context when passed as an argument to setTimeout
-// let car = { 
-//     make: "Porsche", 
-//     model: '911', 
-//     year: 1964, 
+// let car = {
+//     make: "Porsche",
+//     model: '911',
+//     year: 1964,
 //     description() {
-//       console.log(`This car is a ${this.make} ${this.model} from ${this.year}`); 
-//     } 
-// }; 
+//       console.log(`This car is a ${this.make} ${this.model} from ${this.year}`);
+//     }
+// };
 
-// car.description(); //works 
+// car.description(); //works
 // setTimeout(car.description, 200); //fails
 
 // // a) Fix the setTimeout call by wrapping the call to car.description() inside a function
@@ -265,7 +265,7 @@
 // setTimeout(car.description.bind(car), 200);
 
 // // Q6. Use the Function prototype to add a new delay(ms) function to all functions, which can
-// // be used to delay the call to that function by ms milliseconds. 
+// // be used to delay the call to that function by ms milliseconds.
 // // a) Use the example multiply function below to test it with, as above, and assume that all delayed functions will take two parameters
 // // b) Use apply to improve your solution so that delayed functions can take any number of parameters
 // // c) Modify multiply to take 4 parameters and multiply all of them, and test that your delay prototype function still works.
@@ -280,9 +280,9 @@
 //   }
 // }
 
-// function multiply(a, b, c, d) { 
-//   console.log( a * b * c * d ); 
-// } 
+// function multiply(a, b, c, d) {
+//   console.log( a * b * c * d );
+// }
 
 // multiply.delay(500)(5, 5, 5, 5); // prints 25 after 500 milliseconds
 
@@ -293,26 +293,26 @@
 // // a) Define a custom toString method for the Person object that will format and print their details
 // // b) Test your method by creating 2 different people using the below constructor function and printing them
 // // c) Create a new constructor function Student that uses call to inherit from Person and add an extra property cohort
-// // d) Add a custom toString for Student objects that formats and prints their details. Test with 2 students. 
+// // d) Add a custom toString for Student objects that formats and prints their details. Test with 2 students.
 
-// function Person(name, age, gender) { 
-//     this.name = name; 
-//     this.age = age; 
-//     this.gender = gender; 
-// } 
+// function Person(name, age, gender) {
+//     this.name = name;
+//     this.age = age;
+//     this.gender = gender;
+// }
 
 // Person.prototype.toString = function() {
 //   return `Name: ${this.name}, Age: ${this.age}, Gender: ${this.gender}`
 // }
 
-// const person1 = new Person('James Brown', 73, 'male') 
-// const person2 = new Person('Dave Lister', 26, 'male') 
-// const person3 = new Person('Arnold J. Rimmer', 29, 'male') 
+// const person1 = new Person('James Brown', 73, 'male')
+// const person2 = new Person('Dave Lister', 26, 'male')
+// const person3 = new Person('Arnold J. Rimmer', 29, 'male')
 // console.log('person1: '+person1) //prints person1: [object Object]
-// console.log('person2: '+person2) 
-// console.log('person3: '+person3) 
+// console.log('person2: '+person2)
+// console.log('person3: '+person3)
 
-// function Student(name, age, gender, cohort) { 
+// function Student(name, age, gender, cohort) {
 //   // uses call to inherit properties from Person
 //   Person.call(this, name, age, gender)
 //   this.cohort = cohort
@@ -322,72 +322,72 @@
 //   return `Name: ${this.name}, Age: ${this.age}, Gender: ${this.gender}, Cohort: ${this.cohort}`
 // }
 
-// const student1 = new Student('Cat', 25, 'male', 'Red Dwarf') 
-// const student2 = new Student('Kryten', 'unknown', 'male', 'Red Dwarf') 
+// const student1 = new Student('Cat', 25, 'male', 'Red Dwarf')
+// const student2 = new Student('Kryten', 'unknown', 'male', 'Red Dwarf')
 // console.log('student1: '+student1)
-// console.log('student2: '+student2) 
+// console.log('student2: '+student2)
 
-// // Q8. The following DigitalClock class uses an interval to print the time every second once started, until stopped. 
-// class DigitalClock { 
-//     constructor(prefix) { 
-//         this.prefix = prefix; 
-//     } 
+// // Q8. The following DigitalClock class uses an interval to print the time every second once started, until stopped.
+// class DigitalClock {
+//     constructor(prefix) {
+//         this.prefix = prefix;
+//     }
 
-//     display() { 
-//         let date = new Date(); 
-//         //create 3 variables in one go using array destructuring 
-//         let [hours, mins, secs] = [date.getHours(), date.getMinutes(), date.getSeconds()]; 
-//         if (hours < 10) hours = '0' + hours; 
-//         if (mins < 10) mins = '0' + mins; 
-//         if (secs < 10) secs = '0' + secs; 
+//     display() {
+//         let date = new Date();
+//         //create 3 variables in one go using array destructuring
+//         let [hours, mins, secs] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+//         if (hours < 10) hours = '0' + hours;
+//         if (mins < 10) mins = '0' + mins;
+//         if (secs < 10) secs = '0' + secs;
 
-//         console.log(`${this.prefix} ${hours}:${mins}:${secs}`); 
-//     } 
-//     stop() { 
-//         clearInterval(this.timer); 
-//     } 
+//         console.log(`${this.prefix} ${hours}:${mins}:${secs}`);
+//     }
+//     stop() {
+//         clearInterval(this.timer);
+//     }
 
-//     start() { 
-//         this.display(); 
-//         this.timer = setInterval(() => this.display(), 1000); 
-//     } 
-// } 
+//     start() {
+//         this.display();
+//         this.timer = setInterval(() => this.display(), 1000);
+//     }
+// }
 
-// const myClock = new DigitalClock('my clock:') 
+// const myClock = new DigitalClock('my clock:')
 // myClock.start()
 
 
-// // a) Create a new class PrecisionClock that inherits from DigitalClock and adds the parameter precision 
-// // – the number of ms between 'ticks'. This precision parameter should default to 1 second if not supplied. 
+// // a) Create a new class PrecisionClock that inherits from DigitalClock and adds the parameter precision
+// // – the number of ms between 'ticks'. This precision parameter should default to 1 second if not supplied.
 // class PrecisionClock extends DigitalClock {
-//   constructor(prefix, precision = 1000) { 
+//   constructor(prefix, precision = 1000) {
 //     // from the parent DigitalClock
 //     super(prefix)
 //     // new precision argument with nullish coalescing operator to default to 1000
 //     this.precision = precision ?? 1000
-// } 
-
-// start() { 
-//   this.display(); 
-//   // add new precision 
-//   this.timer = setInterval(() => this.display(), this.precision); 
-// } 
 // }
 
-// // const myClock2 = new PrecisionClock('my precision clock:') 
+// start() {
+//   this.display();
+//   // add new precision
+//   this.timer = setInterval(() => this.display(), this.precision);
+// }
+// }
+
+// // const myClock2 = new PrecisionClock('my precision clock:')
 // // myClock2.start()
 
-// // b) Create a new class AlarmClock that inherits from DigitalClock and adds the parameter wakeupTime in the format hh:mm. 
-// // When the clock reaches this time, it should print a 'Wake Up' message and stop ticking. 
+// // b) Create a new class AlarmClock that inherits from DigitalClock and adds the parameter wakeupTime in the format hh:mm.
+// // When the clock reaches this time, it should print a 'Wake Up' message and stop ticking.
 // // This wakeupTime parameter should default to 07:00 if not supplied.
 
 //   class AlarmClock extends DigitalClock {
-//   constructor(prefix, wakeupTime) { 
+//   constructor(prefix, wakeupTime) {
 //     // from the parent DigitalClock
 //     super(prefix)
 //     // new precision argument with nullish coalescing operator to default to 1000
 //     this.wakeupTime = wakeupTime ?? '07:00'
-//   } 
+//   }
 
 //   display() {
 //     // get the time from the parent
@@ -408,7 +408,7 @@
 //   }
 // }
 
-// const myClock3 = new AlarmClock('my alarm clock:', '20:39') 
+// const myClock3 = new AlarmClock('my alarm clock:', '20:39')
 // myClock3.start()
 
 // // Q9. We can delay execution of a function using setTimeout, where we need to provide the callback function to be executed after the delay.
@@ -416,17 +416,17 @@
 // // b) If the random delay is even, consider this a successful delay and resolve the promise, and if the random number is odd, consider this a failure and reject it
 // // c) Update the testing code to catch rejected promises and print a different message
 // // d) Try to update the then and catch messages to include the random delay value
-// function randomDelay() { 
+// function randomDelay() {
 //   return new Promise(function(resolve, reject) {
 //     let seconds = Math.floor(Math.random() * 20) + 1; // random value between 1 and 20
 //     setTimeout(function() {
 //       if (seconds % 2 == 0) {
 //         resolve()
 //       } else {
-//         reject(new Error("Whoops!"))      
+//         reject(new Error("Whoops!"))
 //       }
 //     }, seconds * 1000) // convert seconds to milliseconds
-//     console.log(seconds) 
+//     console.log(seconds)
 //   })
 // }
 
@@ -436,27 +436,27 @@
 //   .catch((error) => console.log(error.message))
 
 
-// // Q10. Fetch is a browser-based function to send a request and receive a response from a server, which uses promises to handle the asynchronous response. 
-// // The below fetchURLData uses fetch to check the response for a successful status code, and returns a promise 
-// // containing the JSON sent by the remote server if successful or an error if it failed. 
+// // Q10. Fetch is a browser-based function to send a request and receive a response from a server, which uses promises to handle the asynchronous response.
+// // The below fetchURLData uses fetch to check the response for a successful status code, and returns a promise
+// // containing the JSON sent by the remote server if successful or an error if it failed.
 // // (To run this code in a node.js environment, follow the instructions in the comments before the function.)
-// import fetch from 'node-fetch' 
-// globalThis.fetch = fetch 
+// import fetch from 'node-fetch'
+// globalThis.fetch = fetch
 
-// function fetchURLData(url) { 
-//     let fetchPromise = fetch(url).then(response => { 
-//         if (response.status === 200) { 
-//             return response.json(); 
-//         } else { 
-//             throw new Error(`Request failed with status ${response.status}`); 
-//         } 
-//     }); 
+// function fetchURLData(url) {
+//     let fetchPromise = fetch(url).then(response => {
+//         if (response.status === 200) {
+//             return response.json();
+//         } else {
+//             throw new Error(`Request failed with status ${response.status}`);
+//         }
+//     });
 
-//     return fetchPromise; 
+//     return fetchPromise;
 // }
 
-// fetchURLData('https://jsonplaceholder.typicode.com/todos/1') 
-// .then(data => console.log(data)) 
+// fetchURLData('https://jsonplaceholder.typicode.com/todos/1')
+// .then(data => console.log(data))
 // .catch(error => console.error(error.message));
 
 // // Output { userId: 1, id: 1, title: 'delectus aut autem', completed: false }
@@ -478,13 +478,13 @@ async function fetchURLData(url) {
     } else {
       throw new Error(`Request failed with status ${response.status}`)
     }
-    // catch statement must follow the try  
+    // catch statement must follow the try
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
-// b) Test both functions with valid and invalid URLs. 
+// b) Test both functions with valid and invalid URLs.
 // valid url test
 fetchURLData('https://jsonplaceholder.typicode.com/todos/1')
   .then(data => console.log(data))
@@ -496,3 +496,7 @@ fetchURLData('https://jsonplaceholder.typicode.com/todos/invalid-url')
   .then(data => console.log(data))
   .catch(error => console.error(error.message))
 // Output: Request failed with status 404
+
+
+
+//Great work Keren, love how you designed it so it is easy for us to check it. Companies in the future will love you! Keep it up!
